@@ -47,6 +47,11 @@ Remember, CROSS JOIN will explode your table rows, so CROSS JOIN should likely b
 Think a bit about the row counts: how many distinct vendors, product names are there (x)?
 How many customers are there (y). 
 Before your final group by you should have the product of those two queries (x*y).  */
+SELECT
+    COUNT(DISTINCT vendor_id) AS x,
+    COUNT(DISTINCT product_id) AS y
+FROM vendor_inventory
+
 
 
 
@@ -91,5 +96,20 @@ Third, SET current_quantity = (...your select statement...), remembering that WH
 Finally, make sure you have a WHERE statement to update the right row, 
 	you'll need to use product_units.product_id to refer to the correct row within the product_units table. 
 When you have all of these components, you can run the update statement. */
+ALTER TABLE product_units
+ADD current_quantity INT
+
+UPDATE product_units
+SET current_quantity = (
+    SELECT COALESCE(MAX(quantity), 0)
+    FROM vendor_inventory
+    WHERE vendor_inventory.product_id = product_units.product_id
+)
+
+
+
+
+
+
 
 
