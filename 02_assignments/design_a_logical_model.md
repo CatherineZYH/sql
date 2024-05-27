@@ -24,8 +24,37 @@ _Hint, search type 1 vs type 2 slowly changing dimensions._
 
 Bonus: Are there privacy implications to this, why or why not?
 ```
-Your answer...
-```
+Type 1 Overwrite:  update customer address under customer table as below:
+Customer
+CustomerID (Primary Key)
+FirstName
+LastName
+Email
+PhoneNumber
+AddressLine1
+AddressLine2
+City
+State
+ZipCode
+Country
+
+Type 2 Retain Changes: keep customer table same, create a new customer address table as below:
+CustomerAddress
+
+AddressID (Primary Key)
+CustomerID (Foreign Key)
+AddressLine1
+AddressLine2
+City
+State
+ZipCode
+Country
+StartDate (When the address became effective)
+EndDate (When the address stopped being effective, NULL if current)
+In this approach, a new record is added each time an address changes, allowing us to track the history of address changes.
+
+
+
 
 ## Question 4
 Review the AdventureWorks Schema [here](https://i.stack.imgur.com/LMu4W.gif)
