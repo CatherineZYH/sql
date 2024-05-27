@@ -90,7 +90,7 @@ How many customers are there (y).
 Before your final group by you should have the product of those two queries (x*y).  */
 SELECT 
    COUNT(DISTINCT vendor_id) AS x,
-    COUNT(DISTINCT product_id) AS y,
+   COUNT(DISTINCT product_id) AS y,
     (5 * COUNT(DISTINCT c.customer_id) * vi.original_price) AS total_revenue_per_product
 FROM 
     vendor_inventory vi
