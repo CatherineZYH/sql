@@ -51,17 +51,25 @@ ZipCode
 Country
 StartDate (When the address became effective)
 EndDate (When the address stopped being effective, NULL if current)
+
 In this approach, a new record is added each time an address changes, allowing us to track the history of address changes.
 
-
-
+Privacy Implications:
+Retaining address changes (Type 2) has privacy implications because it maintains a history of previous addresses, which could be sensitive information. 
+```
 
 ## Question 4
 Review the AdventureWorks Schema [here](https://i.stack.imgur.com/LMu4W.gif)
 
 Highlight at least two differences between it and your ERD. Would you change anything in yours?
+
 ```
-Your answer...
+differences:
+1. the AdventureWorks schema has more complex tables and relationships then mine.
+2.  the AdventureWorks schema has more detail tables, specific information like product, sales order details.
+
+Changes I will make:
+Add product related tables like product category, product details, product sales date, add date related tables, like sales date, order date, shipping date....
 ```
 
 # Criteria
