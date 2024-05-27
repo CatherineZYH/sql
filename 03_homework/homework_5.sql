@@ -35,6 +35,47 @@ HINT: There are a possibly a few ways to do this query, but if you're struggling
 3) Query the second temp table twice, once for the best day, once for the worst day, 
 with a UNION binding them. */
 
+WITH daily_sales AS (
+    SELECT
+        market_date,
+        SUM(quantity*cost_to_customer_per_qty) AS total_sales
+    FROM
+        customer_purchases
+    GROUP BY
+        market_date
+),
+ranked_sales AS (
+    SELECT
+        market_date,
+        total_sales,
+        RANK() OVER (ORDER BY total_sales DESC) AS sales_rank_desc,
+        RANK() OVER (ORDER BY total_sales ASC) AS sales_rank_asc
+    FROM
+        daily_sales
+)
+SELECT
+    market_date,
+    total_sales,
+    'Best Day' AS rank_category
+FROM
+    ranked_sales
+WHERE
+    sales_rank_desc = 1
+
+UNION
+
+SELECT
+    market_date,
+    total_sales,
+    'Worst Day' AS rank_category
+FROM
+    ranked_sales
+WHERE
+    sales_rank_asc = 1
+
+
+
+	
 
 
 -- Cross Join
@@ -52,7 +93,16 @@ SELECT
     COUNT(DISTINCT product_id) AS y
 FROM vendor_inventory
 
-
+SELECT
+    v.vendor_name,
+    p.product_name,
+    5 * original_price AS total_revenue_per_product
+FROM
+    vendor_inventory AS vi
+CROSS JOIN
+    vendor AS v
+JOIN
+    product AS p ON vi.product_id = p.product_id
 
 
 -- INSERT
