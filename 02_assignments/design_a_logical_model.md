@@ -5,8 +5,17 @@ Create a logical model for a small bookstore. 📚
 
 At the minimum it should have employee, order, sales, customer, and book entities (tables). Determine sensible column and table design based on what you know about these concepts. Keep it simple, but work out sensible relationships to keep tables reasonably sized. Include a date table. There are several tools online you can use, I'd recommend [_Draw.io_](https://www.drawio.com/) or [_LucidChart_](https://www.lucidchart.com/pages/).
 
+
+![image](https://github.com/CatherineZYH/sql/assets/102681357/0d8f3822-c9d3-462e-9e88-c5948ab9c48b)
+
+
 ## Question 2
-We want to create employee shifts, splitting up the day into morning and evening. Add this to the ERD.
+We want to create employee shifts, splitting up the day into morning and evening. Add this to the ERD.2
+
+![image](https://github.com/CatherineZYH/sql/assets/102681357/62f47bc5-e1b2-4775-ba27-d50b000c70ba)
+
+
+
 
 ## Question 3
 The store wants to keep customer addresses. Propose two architectures for the CUSTOMER_ADDRESS table, one that will retain changes, and another that will overwrite. Which is type 1, which is type 2?
@@ -15,15 +24,52 @@ _Hint, search type 1 vs type 2 slowly changing dimensions._
 
 Bonus: Are there privacy implications to this, why or why not?
 ```
-Your answer...
+Type 1 Overwrite:  update customer address under customer table as below:
+Customer
+CustomerID (Primary Key)
+FirstName
+LastName
+Email
+PhoneNumber
+AddressLine1
+AddressLine2
+City
+State
+ZipCode
+Country
+
+Type 2 Retain Changes: keep customer table same, create a new customer address table as below:
+CustomerAddress
+
+AddressID (Primary Key)
+CustomerID (Foreign Key)
+AddressLine1
+AddressLine2
+City
+State
+ZipCode
+Country
+StartDate (When the address became effective)
+EndDate (When the address stopped being effective, NULL if current)
+
+In this approach, a new record is added each time an address changes, allowing us to track the history of address changes.
+
+Privacy Implications:
+Retaining address changes (Type 2) has privacy implications because it maintains a history of previous addresses, which could be sensitive information. 
 ```
 
 ## Question 4
 Review the AdventureWorks Schema [here](https://i.stack.imgur.com/LMu4W.gif)
 
 Highlight at least two differences between it and your ERD. Would you change anything in yours?
+
 ```
-Your answer...
+differences:
+1. the AdventureWorks schema has more complex tables and relationships then mine.
+2.  the AdventureWorks schema has more detail tables, specific information like product, sales order details.
+
+Changes I will make:
+Add product related tables like product category, product details, product sales date, add date related tables, like sales date, order date, shipping date....
 ```
 
 # Criteria
